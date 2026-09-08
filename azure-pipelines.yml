@@ -1,0 +1,38 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+
+# Install Node.js
+- task: NodeTool@0
+  inputs:
+    versionSpec: '20.x'
+  displayName: 'Install Node.js'
+
+# Backend
+- script: |
+    cd backend
+    npm install
+  displayName: 'Install Backend Dependencies'
+
+# Frontend
+- script: |
+    cd frontend
+    npm install
+  displayName: 'Install Frontend Dependencies'
+
+# Build Frontend
+- script: |
+    cd frontend
+    npm run build
+  displayName: 'Build Frontend'
+
+# Publish artifacts
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(System.DefaultWorkingDirectory)'
+    ArtifactName: 'mern-app'
+  displayName: 'Publish Artifact'

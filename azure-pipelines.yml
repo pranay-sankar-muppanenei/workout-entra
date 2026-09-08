@@ -30,9 +30,28 @@ steps:
     npm run build
   displayName: 'Build Frontend'
 
-# Publish artifacts
+# Create deployment package
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/mern-app.zip'
+    replaceExistingArchive: true
+  displayName: 'Create ZIP Package'
+
+# Publish artifact
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(System.DefaultWorkingDirectory)'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'mern-app'
   displayName: 'Publish Artifact'
+
+# Deploy to Azure App Service
+- task: AzureWebApp@1
+  displayName: 'Deploy to Azure App Service'
+  inputs:
+    azureSubscription: 'mern-dev-azure'
+    appType: 'webAppLinux'
+    appName: 'mern-workout-app'
+    package: '$(Build.ArtifactStagingDirectory)/mern-app.zip'

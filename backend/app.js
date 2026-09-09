@@ -17,13 +17,14 @@ app.use((req,res,next)=>{
     next();
 })
 app.use(express.json());    
-app.use(cors({
-  origin: [
-    "https://workout-mate-ocsd.vercel.app",
-    "https://workout-mate-o576qfdws-frog22.vercel.app"
-  ],
-  credentials: true
-}));
+// app.use(cors({
+//   origin: [
+//     "https://workout-mate-ocsd.vercel.app",
+//     "https://workout-mate-o576qfdws-frog22.vercel.app"
+//   ],
+//   credentials: true
+// }));
+app.use(cors());
 
 
 app.use('/api',authRoutes);

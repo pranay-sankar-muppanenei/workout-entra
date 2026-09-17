@@ -60,7 +60,6 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'mern-app'
   displayName: 'Publish Artifact'
-
 # Deploy to Azure App Service
 - task: AzureWebApp@1
   displayName: 'Deploy to Azure App Service'
@@ -69,3 +68,16 @@ steps:
     appType: 'webAppLinux'
     appName: 'mern-workout-app'
     package: '$(Build.ArtifactStagingDirectory)/mern-app.zip'
+
+# Acceptance Test - Login API
+- script: |
+    RESPONSE=$(curl -s -X POST \
+      https://mern-workout-app.azurewebsites.net/api/login \
+      -H "Content-Type: application/json" \
+      -d '{"email":"$(TEST_EMAIL)","password":"$(TEST_PASSWORD)"}')
+
+    echo "$RESPONSE"
+
+    echo "$RESPONSE" | grep token
+
+  displayName: 'Acceptance Test - Login'

@@ -28,7 +28,7 @@ steps:
 # Unit Tests
 - script: |
     cd backend
-    pm test
+    npm test
   displayName: 'Unit Tests - Jest'
 
   

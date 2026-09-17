@@ -72,7 +72,7 @@ steps:
 # Acceptance Test - Login API
 - script: |
     RESPONSE=$(curl -s -X POST \
-      https://mern-workout-app.azurewebsites.net/api/login \
+      https://workout-mate-kappa.vercel.app/login \
       -H "Content-Type: application/json" \
       -d '{"email":"$(TEST_EMAIL)","password":"$(TEST_PASSWORD)"}')
 

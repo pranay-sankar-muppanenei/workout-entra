@@ -18,6 +18,13 @@ steps:
     npm install
   displayName: 'Install Backend Dependencies'
 
+# Code Analysis
+- script: |
+    cd backend
+    npm run lint
+  displayName: 'Code Analysis - ESLint'
+
+  
 # Frontend
 - script: |
     cd frontend

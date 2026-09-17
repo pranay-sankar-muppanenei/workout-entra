@@ -72,12 +72,18 @@ steps:
 # Acceptance Test - Login API
 - script: |
     RESPONSE=$(curl -s -X POST \
-      https://workout-mate-kappa.vercel.app/login \
+      https://mern-workout-app-cperhzf6bthahee5.centralindia-01.azurewebsites.net/api/login \
       -H "Content-Type: application/json" \
-      -d '{"email":"$(TEST_EMAIL)","password":"$(TEST_PASSWORD)"}')
+      -d '{"email":"test@gmail.com","password":"Pranay@2652005"}')
 
+    echo "Response:"
     echo "$RESPONSE"
 
-    echo "$RESPONSE" | grep token
+    if echo "$RESPONSE" | grep -q token; then
+      echo "Acceptance Test Passed"
+    else
+      echo "Acceptance Test Failed"
+      exit 1
+    fi
 
   displayName: 'Acceptance Test - Login'

@@ -13,5 +13,14 @@ export default defineConfig([
         ...globals.node
       }
     }
+  },
+
+  {
+    files: ["tests/**/*.js"],
+    languageOptions: {
+      globals: {
+        ...globals.jest
+      }
+    }
   }
 ]);

@@ -13,7 +13,7 @@ const Navbar=()=>{
     return(
         <div className="max-w-[1400px] m-5 px-20 flex justify-between items-center">
             <Link to='/'>
-                <h1 className="font-bold text-[25px]">Workout Buddy</h1>
+                <h1 className="font-bold text-[25px]">Workout Budddy</h1>
             </Link>
             <div className="flex gap-4">
                 {user && (

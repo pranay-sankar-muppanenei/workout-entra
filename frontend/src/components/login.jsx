@@ -1,14 +1,16 @@
 import { useState } from "react";
-import  useLogin  from "../hooks/useLogin";
+import { useMicrosoftLogin } from "../hooks/useMicrosoftLogin";
+import useLogin from "../hooks/useLogin";
 
 const Login = () => {
+  const { microsoftLogin } = useMicrosoftLogin();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {login,isLoading,error}=useLogin();
+  const { login, isLoading, error } = useLogin();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(email, password); 
+    await login(email, password);
   };
 
   return (
@@ -40,13 +42,30 @@ const Login = () => {
         />
 
         <button
-        disabled={isLoading}
+          disabled={isLoading}
           type="submit"
           className="w-full bg-green-500 text-white py-2 rounded-md font-medium hover:bg-green-600 transition"
         >
           Login
         </button>
         {error && <div className="text-red-500 text-sm mt-4">{error}</div>}
+
+        <div className="my-4 text-center">
+          <span className="text-gray-500">OR</span>
+        </div>
+
+        <button
+  type="button"
+  onClick={() => {
+
+    window.location.href =
+      "https://mern-workout-app-cperhzf6bthahee5.centralindia-01.azurewebsites.net/.auth/login/aad?post_login_redirect_url=https://workout-mate-kappa.vercel.app//microsoft-callback";
+
+  }}
+  className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
+>
+  Login with Microsoft
+</button>
       </form>
     </div>
   );

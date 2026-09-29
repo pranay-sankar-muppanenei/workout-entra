@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { useMicrosoftLogin } from "../hooks/useMicrosoftLogin";
 import useLogin from "../hooks/useLogin";
 
 const Login = () => {
-  const { microsoftLogin } = useMicrosoftLogin();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login, isLoading, error } = useLogin();
@@ -59,7 +57,7 @@ const Login = () => {
   onClick={() => {
 
     window.location.href =
-      "https://mern-workout-app-cperhzf6bthahee5.centralindia-01.azurewebsites.net/.auth/login/aad?post_login_redirect_url=https://workout-mate-kappa.vercel.app//microsoft-callback";
+      "https://mern-workout-app-cperhzf6bthahee5.centralindia-01.azurewebsites.net/.auth/login/aad?post_login_redirect_url=https://workout-mate-kappa.vercel.app/microsoft-callback";
 
   }}
   className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"

@@ -79,4 +79,27 @@ const userList=async(req,res)=>{
     }
 }
 
-module.exports={loginUser,signUser,userList}
+const microsoftLogin = async (req, res) => {
+
+  const principal =
+    req.headers['x-ms-client-principal'];
+
+  if (!principal) {
+    return res.status(401).json({
+      error: 'Not authenticated'
+    });
+  }
+
+  const user = JSON.parse(
+    Buffer.from(
+      principal,
+      'base64'
+    ).toString('utf8')
+  );
+
+  res.json(user);
+};
+
+
+
+module.exports={loginUser,signUser,userList,microsoftLogin};

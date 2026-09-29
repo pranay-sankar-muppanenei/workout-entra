@@ -81,23 +81,73 @@ const userList=async(req,res)=>{
 
 const microsoftLogin = async (req, res) => {
 
-  const principal =
-    req.headers['x-ms-client-principal'];
+    try {
 
-  if (!principal) {
-    return res.status(401).json({
-      error: 'Not authenticated'
-    });
-  }
+        const principal =
+            req.headers['x-ms-client-principal'];
 
-  const user = JSON.parse(
-    Buffer.from(
-      principal,
-      'base64'
-    ).toString('utf8')
-  );
+        if (!principal) {
+            return res.status(401).json({
+                error: 'Not authenticated'
+            });
+        }
 
-  res.json(user);
+        const userData = JSON.parse(
+            Buffer.from(
+                principal,
+                'base64'
+            ).toString('utf8')
+        );
+
+        const emailClaim =
+            userData.claims.find(
+                claim =>
+                    claim.typ ===
+                    'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'
+            );
+
+        const email = emailClaim?.val;
+
+        if (!email) {
+            return res.status(400).json({
+                error: 'Email not found from Microsoft account'
+            });
+        }
+
+        let user =
+            await authSchema.findOne({ email });
+
+        // Auto-register if user doesn't exist
+        if (!user) {
+
+            const randomPassword =
+                await bcrypt.hash(
+                    'MicrosoftLogin@123',
+                    10
+                );
+
+            user =
+                await authSchema.create({
+                    email,
+                    password: randomPassword
+                });
+        }
+
+        const token =
+            createToken(user._id);
+
+        res.status(200).json({
+            email,
+            token
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            error: error.message
+        });
+
+    }
 };
 
 

@@ -57,7 +57,7 @@ const Login = () => {
   onClick={() => {
 
     window.location.href =
-      "https://mern-workout-app-cperhzf6bthahee5.centralindia-01.azurewebsites.net/.auth/login/aad?post_login_redirect_url=https://workout-mate-kappa.vercel.app/microsoft-callback";
+"https://mern-workout-app-cperhzf6bthahee5.centralindia-01.azurewebsites.net/.auth/login/aad?post_login_redirect_url=https://workout-entra.vercel.app/microsoft-callback";
 
   }}
   className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
